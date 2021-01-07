@@ -1,12 +1,13 @@
 import React from 'react';
 import * as styles from './style.css';
+import Schedule from '../Schedule';
 
 import dayjs from 'dayjs';
 import { Typography } from '@material-ui/core';
 
 import { isSameDay, isSameMonth, isFirstDay, getMonth } from '../../services/calendar';
 
-const CalendarElement = ({month, day}) => {
+const CalendarElement = ({month, day, schedules}) => {
     const today = dayjs();
     
     const currentMonth = getMonth(month)
@@ -30,6 +31,11 @@ const CalendarElement = ({month, day}) => {
                     {day.format(format)}
                 </span>
             </Typography>
+            <div className={styles.schedules}>
+                {schedules.map(e => (
+                    <Schedule key={e.id} schedule={e} />
+                ))}
+            </div>
         </div>
     )
 }
