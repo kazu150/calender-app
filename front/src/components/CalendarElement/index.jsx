@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core';
 
 import { isSameDay, isSameMonth, isFirstDay, getMonth } from '../../services/calendar';
 
-const CalendarElement = ({month, day, schedules}) => {
+const CalendarElement = ({month, day, schedules, ...props}) => {
     const today = dayjs();
     
     const currentMonth = getMonth(month)
@@ -33,7 +33,7 @@ const CalendarElement = ({month, day, schedules}) => {
             </Typography>
             <div className={styles.schedules}>
                 {schedules.map(e => (
-                    <Schedule key={e.id} schedule={e} />
+                    <Schedule key={e.id} schedule={e} {...props} />
                 ))}
             </div>
         </div>
