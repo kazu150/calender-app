@@ -19,8 +19,11 @@ const StyledTypography = withStyles({
 })(Typography)
 
 const Navigation = ({ setNextMonth, setPreviousMonth }) => {
+<<<<<<< HEAD
     const [ selectedDate, handleDateChange ] = useState(new Date())
 
+=======
+>>>>>>> feature/#1
     return (
         <StyledToolbar>
             <IconButton>
@@ -30,10 +33,10 @@ const Navigation = ({ setNextMonth, setPreviousMonth }) => {
             <StyledTypography color="textSecondary" variant="h5" component="h1">
                 カレンダー
             </StyledTypography>
-            <IconButton size="small">
+            <IconButton size="small" onClick={setPreviousMonth}>
                 <ArrowBackIos />
             </IconButton>
-            <IconButton size="small">
+            <IconButton size="small" onClick={setNextMonth}>
                 <ArrowForwardIos />
             </IconButton>
             <StyledDatePicker
