@@ -9,8 +9,7 @@ const days= ["日","月","火","水","木","金","土"];
 
 // const calendar = createCalendar();
 
-const CalendarBoard = ({ calendar }) => {
-    console.log(calendar)
+const CalendarBoard = ({ month, calendar }) => {
     return (
         <div className={styles.container}>
             <GridList className={styles.grid} cols={7} spacing={0} cellHeight="auto">
@@ -29,7 +28,7 @@ const CalendarBoard = ({ calendar }) => {
                 ))}
                 {calendar.map(c => (
                     <li key={c.toISOString()}>
-                        <CalendarElement day={c} />
+                        <CalendarElement month={month} day={c} />
                     </li>
                 ))}
             </GridList>
