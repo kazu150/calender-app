@@ -7,9 +7,12 @@ import CalendarElement from '../CalendarElement';
 // import { createCalendar } from '../../services/calendar'
 const days= ["日","月","火","水","木","金","土"];
 
-// const calendar = createCalendar();
-
-const CalendarBoard = ({ month, calendar, openAddScheduleDialog }) => {
+const CalendarBoard = ({ 
+    month, 
+    calendar, 
+    openAddScheduleDialog,
+    openCurrentScheduleDialog
+}) => {
     return (
         <div className={styles.container}>
             <GridList className={styles.grid} cols={7} spacing={0} cellHeight="auto">
@@ -26,9 +29,17 @@ const CalendarBoard = ({ month, calendar, openAddScheduleDialog }) => {
                         </Typography>
                     </li>
                 ))}
-                {calendar.map(c => (
-                    <li key={c.toISOString()} onClick={() => openAddScheduleDialog(c)}>
-                        <CalendarElement month={month} day={c} />
+                {calendar.map(({ date, schedules }) => (
+                    <li 
+                        key={date.toISOString()} 
+                        onClick={() => openAddScheduleDialog(date)}
+                    >
+                        <CalendarElement
+                            month={month}
+                            day={date}
+                            schedules={schedules}
+                            onClickSchedule={openCurrentScheduleDialog}
+                        />
                     </li>
                 ))}
             </GridList>
