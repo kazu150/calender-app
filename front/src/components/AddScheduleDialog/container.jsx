@@ -2,9 +2,11 @@ import AddScheduleDialog from './presentation';
 import { connect } from 'react-redux';
 import { 
     addScheduleCloseDialog,
-    addScheduleSetValue
+    addScheduleSetValue,
+    addScheduleStartEdit
 } from '../../redux/addSchedule/actions';
 import { asyncSchedulesAddItem } from '../../redux/schedules/effects';
+import { isCloseDialog } from "../../services/schedule";
 
 const mapStateToProps = state => ({
     schedule: state.addSchedule
@@ -20,21 +22,37 @@ const mapDispatchToProps = dispatch => ({
     saveSchedule: schedule => {
         dispatch(asyncSchedulesAddItem(schedule));
         dispatch(addScheduleCloseDialog());
+    },
+    setIsEditStart: () => {
+        dispatch(addScheduleStartEdit());
     }
 })
 
-const mergeProps = (stateProps, dispatchProps) => ({
-    ...stateProps,
-    ...dispatchProps,
-    saveSchedule: () => {
-        const {
-            schedule: { form: schedule }
-            // ↑多分、これはaddScheduleReducer内のstate構造から、schedulesReducer内の構造に変更するための処理
-            // マウスホバーするとわかるが、（多分）ここで最終的に定義しているのは{}のなかのschedule。   
-        } = stateProps;
-        dispatchProps.saveSchedule(schedule);
+const mergeProps = (stateProps, dispatchProps) => {
+    const {
+        schedule: { form: schedule }
+    } = stateProps;
+
+    const { saveSchedule, closeDialog } =dispatchProps;
+
+    return{
+        ...stateProps,
+        ...dispatchProps,
+        saveSchedule: () => {
+            const {
+                schedule: { form: schedule }
+                // ↑多分、これはaddScheduleReducer内のstate構造から、schedulesReducer内の構造に変更するための処理
+                // マウスホバーするとわかるが、（多分）ここで最終的に定義しているのは{}のなかのschedule。   
+            } = stateProps;
+            dispatchProps.saveSchedule(schedule);
+        },
+        closeDialog: () => {
+            if (isCloseDialog(schedule)) {
+                closeDialog();
+            }
+        }
     }
-});
+};
 
 export default connect(
     mapStateToProps,
